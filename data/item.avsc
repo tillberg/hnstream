@@ -1,0 +1,21 @@
+{
+  "namespace": "hn.avro",
+  "type": "record",
+  "name": "ItemRecord",
+  "fields" : [
+    {"name": "id", "type": "int"},
+    {"name": "deleted", "type": "boolean"},
+    {"name": "_type", "type": "string"},
+    {"name": "by", "type": "string"},
+    {"name": "time", "type": "int"},
+    {"name": "text", "type": "string"},
+    {"name": "dead", "type": "boolean"},
+    {"name": "parent", "type": "int"},
+    {"name": "kids", "type": {"type": "array", "items": "int"}},
+    {"name": "url", "type": "string"},
+    {"name": "score", "type": "int"},
+    {"name": "title", "type": "string"},
+    {"name": "parts", "type": {"type": "array", "items": "int"}},
+    {"name": "descendants", "type": {"type": "array", "items": "int"}}
+  ]
+}
