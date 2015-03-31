@@ -3,7 +3,7 @@ package hnstream
 import java.util.concurrent.Semaphore
 import com.firebase.client._
 import java.util.{List => JList, Map => JMap}
-//import scala.collection.JavaConversions._
+import scala.collection.JavaConversions._
 
 object HNStream extends App {
   val fb = new Firebase("https://hacker-news.firebaseio.com/v0")
@@ -16,12 +16,13 @@ object HNStream extends App {
     fbItems.child(itemId.toString).addListenerForSingleValueEvent(new ValueEventListener {
       override def onDataChange(dataSnapshot: DataSnapshot) = {
         val item = Item.fromSnapshot(dataSnapshot)
-        val itemUpdate = ItemUpdate.fromItemNow(item)
-
+//        val itemUpdate = ItemUpdate.fromItemNow(item)
+        val serialized = Item.toAvroMsg(item)
 //        val item = new Item(0, false, "", "", 0, "", false, 0, List[Int](1), "", 0, "", List[Int](1), List[Int](1))
 //        val serialized = ScalaMessagePack.write(item)
 //        val serialized = ScalaMessagePack.write(new YourClass())
-//        println("item " + itemId + ": " + item + " (" + serialized.length + " bytes msgpacked)")
+        println("item " + itemId + ": " + item + " (" + serialized.length + " bytes avro)")
+        println(serialized)
       }
       override def onCancelled(firebaseError: FirebaseError) =
         println("error fetching item " + itemId + ": " + firebaseError)
@@ -70,7 +71,7 @@ object HNStream extends App {
         println(now + " updates")
 //        println( + " " + data.child("items").getValue(intListTypeInd))
 //        data.child("profiles").getValue(stringListTypeInd).foreach(notifyUserUpdate)
-//        data.child("items").getValue(intListTypeInd).foreach(notifyItemUpdate)
+        data.child("items").getValue(intListTypeInd).foreach(notifyItemUpdate)
       case "maxitem" =>
         notifyMaxItemId(data.getValue(intTypeInd))
       case _ =>

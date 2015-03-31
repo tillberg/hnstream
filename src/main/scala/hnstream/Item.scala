@@ -5,8 +5,10 @@ import java.util.{List => JList, Map => JMap}
 import com.firebase.client.{GenericTypeIndicator, DataSnapshot}
 import com.julianpeeters.avro.annotations._
 import org.apache.avro.file.{DataFileWriter, SeekableByteArrayInput, DataFileReader}
-import org.apache.avro.generic.{GenericDatumReader, GenericRecord}
+import org.apache.avro.generic.{GenericData, GenericDatumReader, GenericRecord}
 import org.apache.avro.specific.{SpecificDatumWriter, SpecificDatumReader}
+import org.apache.avro.Schema
+import scala.collection.JavaConversions._
 
 @AvroTypeProvider("/Users/dtillberg/work/hnstream/data/item.avsc")
 case class ItemRecord()
@@ -19,12 +21,12 @@ class Item(_id: Int,
            _text: String,
            _dead:Boolean,
            _parent:Int,
-           _kids: List[Int],
+           _kids: JList[Int],
            _url: String,
            _score: Int,
            _title: String,
-           _parts: List[Int],
-           _descendants: List[Int]) {
+           _parts: JList[Int],
+           _descendants: JList[Int]) {
   var id = _id
   var deleted = _deleted
   var _type = __type
@@ -62,7 +64,8 @@ object Item {
         case _ => false
       }
     }
-    def getIntArray(k: String): List[Int] = {
+    def getIntArray(k: String): JList[Int] = {
+
       _get(k) match {
         case n: Array[Int] => n.toList
         case _ => List[Int]()
@@ -94,28 +97,32 @@ object Item {
   }
 
   def toAvroMsg(item: Item): Array[Byte] = {
-    var rec = new ItemRecord()
-    rec.id = item.id
-    rec.deleted = item.deleted
-    rec._type = item._type
-    rec.by = item.by
-    rec.time = item.time
-    rec.text = item.text
-    rec.dead = item.dead
-    rec.parent = item.parent
-    rec.kids = item.kids
-    rec.url = item.url
-    rec.score = item.score
-    rec.title = item.title
-    rec.parts = item.parts
-    rec.descendants = item.descendants
+    val schemaStr = scala.io.Source.fromFile("data/item.avsc").mkString
+    val parser = new Schema.Parser
+    val schema = parser.parse(schemaStr)
+    val rec = new GenericData.Record(schema)
+    rec.put("id", item.id)
+    rec.put("deleted", item.deleted)
+    rec.put("_type", item._type)
+    rec.put("by", item.by)
+    rec.put("time", item.time)
+    rec.put("text", item.text)
+    rec.put("dead", item.dead)
+    rec.put("parent", item.parent)
+    rec.put("kids", item.kids)
+    rec.put("url", item.url)
+    rec.put("score", item.score)
+    rec.put("title", item.title)
+    rec.put("parts", item.parts)
+    rec.put("descendants", item.descendants)
     val baos = new ByteArrayOutputStream
-    val datumWriter = new SpecificDatumWriter[ItemRecord]()
+    val datumWriter = new SpecificDatumWriter[GenericData.Record]()
     val dataFileWriter = new DataFileWriter(datumWriter)
-    dataFileWriter.create(ItemRecord.getSchema, baos)
+    dataFileWriter.create(schema, baos)
     dataFileWriter.append(rec)
-
-
+    dataFileWriter.close()
+    baos.close()
+    baos.toByteArray
   }
 
   val objMapTypeInd = new GenericTypeIndicator[JMap[String, Object]](){}
