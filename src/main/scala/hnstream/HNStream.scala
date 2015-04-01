@@ -17,12 +17,14 @@ object HNStream extends App {
       override def onDataChange(dataSnapshot: DataSnapshot) = {
         val item = Item.fromSnapshot(dataSnapshot)
 //        val itemUpdate = ItemUpdate.fromItemNow(item)
-        val serialized = Item.toAvroMsg(item)
+        val serialized = item.toAvroMsg
 //        val item = new Item(0, false, "", "", 0, "", false, 0, List[Int](1), "", 0, "", List[Int](1), List[Int](1))
 //        val serialized = ScalaMessagePack.write(item)
 //        val serialized = ScalaMessagePack.write(new YourClass())
         println("item " + itemId + ": " + item + " (" + serialized.length + " bytes avro)")
-        println(serialized)
+        println(serialized.map("%02X" format _).mkString)
+        val deserialized = Item.fromAvroMsg(serialized)
+        println(deserialized.id)
       }
       override def onCancelled(firebaseError: FirebaseError) =
         println("error fetching item " + itemId + ": " + firebaseError)

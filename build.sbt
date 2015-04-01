@@ -9,3 +9,11 @@ scalaVersion := "2.11.6"
 
 libraryDependencies += "com.julianpeeters" % "avro-scala-macro-annotations_2.11" % "0.5"
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0-M5" cross CrossVersion.full)
+
+resolvers ++= Seq(
+  "RoundEights" at "http://maven.spikemark.net/roundeights"
+)
+
+libraryDependencies ++= Seq(
+  "com.roundeights" %% "hasher" % "1.0.0"
+)

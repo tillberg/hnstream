@@ -9,6 +9,7 @@ import org.apache.avro.generic.{GenericData, GenericDatumReader, GenericRecord}
 import org.apache.avro.specific.{SpecificDatumWriter, SpecificDatumReader}
 import org.apache.avro.Schema
 import scala.collection.JavaConversions._
+import com.roundeights.hasher.Implicits._
 
 @AvroTypeProvider("/Users/dtillberg/work/hnstream/data/item.avsc")
 case class ItemRecord()
@@ -41,9 +42,63 @@ class Item(_id: Int,
   var title = _title
   var parts = _parts
   var descendants = _descendants
+
+  def toAvroMsg: Array[Byte] = {
+    val schema = Item.avroSchema
+    val rec = new GenericData.Record(schema)
+    rec.put("id", this.id)
+    rec.put("deleted", this.deleted)
+    rec.put("_type", this._type)
+    rec.put("by", this.by)
+    rec.put("time", this.time)
+    rec.put("text", this.text)
+    rec.put("dead", this.dead)
+    rec.put("parent", this.parent)
+    rec.put("kids", this.kids)
+    rec.put("url", this.url)
+    rec.put("score", this.score)
+    rec.put("title", this.title)
+    rec.put("parts", this.parts)
+    rec.put("descendants", this.descendants)
+    val datumWriter = new SpecificDatumWriter[GenericData.Record]()
+    val dataFileWriter = new DataFileWriter(datumWriter)
+    // create a new stream for the schema id + payload
+    val baos = new ByteArrayOutputStream
+    // write the schema, then reset the stream back to the beginning
+    // there doesn't seem to be a way to avoid writing the schema at the start
+    dataFileWriter.create(schema, baos)
+    baos.reset()
+    // write the 64-bit schema ID, followed by the encoded payload
+//    baos.write(Item.avroSchemaId)
+    dataFileWriter.append(rec)
+    dataFileWriter.close()
+    baos.close()
+    baos.toByteArray
+  }
 }
 
 object Item {
+  lazy val avroSchema = {
+    val schemaStr = scala.io.Source.fromFile("data/item.avsc").mkString
+    val parser = new Schema.Parser
+    parser.parse(schemaStr)
+  }
+
+  lazy val avroSchemaBytes = {
+    val schema = Item.avroSchema
+    val baos = new ByteArrayOutputStream
+    val datumWriter = new SpecificDatumWriter[GenericData.Record]()
+    val dataFileWriter = new DataFileWriter(datumWriter)
+    dataFileWriter.create(schema, baos)
+    dataFileWriter.close()
+//    baos.close()
+    baos.toByteArray
+  }
+
+  lazy val avroSchemaId = {
+    Item.avroSchemaBytes.sha256.bytes.slice(0, 8)
+  }
+
   def generateFromGetter(_get: (String) => Any) = {
     def getInt(k: String): Int = {
       val v = _get(k)
@@ -89,40 +144,17 @@ object Item {
   }
 
   def fromAvroMsg(serialized: Array[Byte]) = {
-    val sin = new SeekableByteArrayInput(serialized)
-    val datumReader = new SpecificDatumReader[ItemRecord]()
+//    val payload = serialized.slice(8, serialized.length)
+    val combined = Array.concat(avroSchemaBytes, serialized)
+    val sin = new SeekableByteArrayInput(combined)
+    val datumReader = new GenericDatumReader[GenericRecord](Item.avroSchema)
     val dataFileReader = new DataFileReader(sin, datumReader)
     val rec = dataFileReader.next()
-    new Item(rec.id, rec.deleted, rec._type, rec.by, rec.time, rec.text, rec.dead, rec.parent, rec.kids, rec.url, rec.score, rec.title, rec.parts, rec.descendants)
-  }
-
-  def toAvroMsg(item: Item): Array[Byte] = {
-    val schemaStr = scala.io.Source.fromFile("data/item.avsc").mkString
-    val parser = new Schema.Parser
-    val schema = parser.parse(schemaStr)
-    val rec = new GenericData.Record(schema)
-    rec.put("id", item.id)
-    rec.put("deleted", item.deleted)
-    rec.put("_type", item._type)
-    rec.put("by", item.by)
-    rec.put("time", item.time)
-    rec.put("text", item.text)
-    rec.put("dead", item.dead)
-    rec.put("parent", item.parent)
-    rec.put("kids", item.kids)
-    rec.put("url", item.url)
-    rec.put("score", item.score)
-    rec.put("title", item.title)
-    rec.put("parts", item.parts)
-    rec.put("descendants", item.descendants)
-    val baos = new ByteArrayOutputStream
-    val datumWriter = new SpecificDatumWriter[GenericData.Record]()
-    val dataFileWriter = new DataFileWriter(datumWriter)
-    dataFileWriter.create(schema, baos)
-    dataFileWriter.append(rec)
-    dataFileWriter.close()
-    baos.close()
-    baos.toByteArray
+    def get(k: String) = {
+      rec.get(k)
+    }
+    generateFromGetter(get)
+//    new Item(rec.id, rec.deleted, rec._type, rec.by, rec.time, rec.text, rec.dead, rec.parent, rec.kids, rec.url, rec.score, rec.title, rec.parts, rec.descendants)
   }
 
   val objMapTypeInd = new GenericTypeIndicator[JMap[String, Object]](){}
