@@ -43,7 +43,14 @@ class Item(_id: Int,
   var parts = _parts
   var descendants = _descendants
 
-  def toAvroMsg: Array[Byte] = {
+  def initAvroFile(baos: ByteArrayOutputStream): DataFileWriter = {
+    val schema = Item.avroSchema
+    val datumWriter = new SpecificDatumWriter[GenericData.Record]()
+    val dataFileWriter = new DataFileWriter(datumWriter)
+
+  }
+
+  def toAvroMsg(dataFileWriter: DataFileWriter) = {
     val schema = Item.avroSchema
     val rec = new GenericData.Record(schema)
     rec.put("id", this.id)
