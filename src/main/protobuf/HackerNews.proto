@@ -20,17 +20,17 @@ message Item {
     optional uint32 descendents = 14;
 }
 
-//message User {
-//    optional uint32 id = 1;
-//    optional uint32 delay = 2;
-//    optional uint32 created = 3;
-//    optional uint32 karma = 4;
-//    optional string about = 5;
-//    repeated uint32 submitted = 6;
-//}
-//
-//message Update {
-//    optional uint32 timestamp = 1;
-//    optional Item item = 2;
-//    optional User user = 3;
-//}
+message User {
+    optional string id = 1;
+    optional uint32 delay = 2;
+    optional uint32 created = 3;
+    optional uint32 karma = 4;
+    optional string about = 5;
+    repeated uint32 submitted = 6;
+}
+
+message Update {
+    optional uint32 time = 1;
+    optional Item item = 2;
+    optional User user = 3;
+}
