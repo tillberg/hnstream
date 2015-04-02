@@ -11,6 +11,10 @@ class Update(_obj: AnyRef, _time: Int) {
     case _item: Item => _item
     case _ => null
   }
+  val toplist = _obj match {
+    case _toplist: TopList => _toplist
+    case _ => null
+  }
   val time = _time
 
   def toProtobuf: PBMessages.Update = {
@@ -18,6 +22,7 @@ class Update(_obj: AnyRef, _time: Int) {
     builder.setTime(time)
     if (user != null) builder.setUser(user.toProtobuf)
     if (item != null) builder.setItem(item.toProtobuf)
+    if (toplist != null) builder.setTopList(toplist.toProtobuf)
     builder.build
   }
 
@@ -30,7 +35,9 @@ object Update {
   def createAtNow(obj: AnyRef) = new Update(obj, (System.currentTimeMillis / 1000).toInt)
 
   def fromProtobuf(rec: PBMessages.Update): Update = {
-    val obj = if (rec.hasUser) User.fromProtobuf(rec.getUser) else Item.fromProtobuf(rec.getItem)
+    val obj = if (rec.hasUser) User.fromProtobuf(rec.getUser)
+              else if (rec.hasItem) Item.fromProtobuf(rec.getItem)
+              else TopList.fromProtobuf(rec.getTopList)
     new Update(obj, rec.getTime)
   }
 

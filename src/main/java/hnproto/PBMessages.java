@@ -2990,6 +2990,645 @@ public final class PBMessages {
     // @@protoc_insertion_point(class_scope:hnproto.User)
   }
 
+  public interface TopListOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:hnproto.TopList)
+      com.google.protobuf.MessageOrBuilder {
+
+    /**
+     * <code>required string title = 1;</code>
+     */
+    boolean hasTitle();
+    /**
+     * <code>required string title = 1;</code>
+     */
+    java.lang.String getTitle();
+    /**
+     * <code>required string title = 1;</code>
+     */
+    com.google.protobuf.ByteString
+        getTitleBytes();
+
+    /**
+     * <code>repeated uint32 ids = 2;</code>
+     */
+    java.util.List<java.lang.Integer> getIdsList();
+    /**
+     * <code>repeated uint32 ids = 2;</code>
+     */
+    int getIdsCount();
+    /**
+     * <code>repeated uint32 ids = 2;</code>
+     */
+    int getIds(int index);
+  }
+  /**
+   * Protobuf type {@code hnproto.TopList}
+   */
+  public static final class TopList extends
+      com.google.protobuf.GeneratedMessage implements
+      // @@protoc_insertion_point(message_implements:hnproto.TopList)
+      TopListOrBuilder {
+    // Use TopList.newBuilder() to construct.
+    private TopList(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+      super(builder);
+      this.unknownFields = builder.getUnknownFields();
+    }
+    private TopList(boolean noInit) { this.unknownFields = com.google.protobuf.UnknownFieldSet.getDefaultInstance(); }
+
+    private static final TopList defaultInstance;
+    public static TopList getDefaultInstance() {
+      return defaultInstance;
+    }
+
+    public TopList getDefaultInstanceForType() {
+      return defaultInstance;
+    }
+
+    private final com.google.protobuf.UnknownFieldSet unknownFields;
+    @java.lang.Override
+    public final com.google.protobuf.UnknownFieldSet
+        getUnknownFields() {
+      return this.unknownFields;
+    }
+    private TopList(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      initFields();
+      int mutable_bitField0_ = 0;
+      com.google.protobuf.UnknownFieldSet.Builder unknownFields =
+          com.google.protobuf.UnknownFieldSet.newBuilder();
+      try {
+        boolean done = false;
+        while (!done) {
+          int tag = input.readTag();
+          switch (tag) {
+            case 0:
+              done = true;
+              break;
+            default: {
+              if (!parseUnknownField(input, unknownFields,
+                                     extensionRegistry, tag)) {
+                done = true;
+              }
+              break;
+            }
+            case 10: {
+              com.google.protobuf.ByteString bs = input.readBytes();
+              bitField0_ |= 0x00000001;
+              title_ = bs;
+              break;
+            }
+            case 16: {
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+                ids_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              ids_.add(input.readUInt32());
+              break;
+            }
+            case 18: {
+              int length = input.readRawVarint32();
+              int limit = input.pushLimit(length);
+              if (!((mutable_bitField0_ & 0x00000002) == 0x00000002) && input.getBytesUntilLimit() > 0) {
+                ids_ = new java.util.ArrayList<java.lang.Integer>();
+                mutable_bitField0_ |= 0x00000002;
+              }
+              while (input.getBytesUntilLimit() > 0) {
+                ids_.add(input.readUInt32());
+              }
+              input.popLimit(limit);
+              break;
+            }
+          }
+        }
+      } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+        throw e.setUnfinishedMessage(this);
+      } catch (java.io.IOException e) {
+        throw new com.google.protobuf.InvalidProtocolBufferException(
+            e.getMessage()).setUnfinishedMessage(this);
+      } finally {
+        if (((mutable_bitField0_ & 0x00000002) == 0x00000002)) {
+          ids_ = java.util.Collections.unmodifiableList(ids_);
+        }
+        this.unknownFields = unknownFields.build();
+        makeExtensionsImmutable();
+      }
+    }
+    public static final com.google.protobuf.Descriptors.Descriptor
+        getDescriptor() {
+      return hnproto.PBMessages.internal_static_hnproto_TopList_descriptor;
+    }
+
+    protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+        internalGetFieldAccessorTable() {
+      return hnproto.PBMessages.internal_static_hnproto_TopList_fieldAccessorTable
+          .ensureFieldAccessorsInitialized(
+              hnproto.PBMessages.TopList.class, hnproto.PBMessages.TopList.Builder.class);
+    }
+
+    public static com.google.protobuf.Parser<TopList> PARSER =
+        new com.google.protobuf.AbstractParser<TopList>() {
+      public TopList parsePartialFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws com.google.protobuf.InvalidProtocolBufferException {
+        return new TopList(input, extensionRegistry);
+      }
+    };
+
+    @java.lang.Override
+    public com.google.protobuf.Parser<TopList> getParserForType() {
+      return PARSER;
+    }
+
+    private int bitField0_;
+    public static final int TITLE_FIELD_NUMBER = 1;
+    private java.lang.Object title_;
+    /**
+     * <code>required string title = 1;</code>
+     */
+    public boolean hasTitle() {
+      return ((bitField0_ & 0x00000001) == 0x00000001);
+    }
+    /**
+     * <code>required string title = 1;</code>
+     */
+    public java.lang.String getTitle() {
+      java.lang.Object ref = title_;
+      if (ref instanceof java.lang.String) {
+        return (java.lang.String) ref;
+      } else {
+        com.google.protobuf.ByteString bs = 
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        if (bs.isValidUtf8()) {
+          title_ = s;
+        }
+        return s;
+      }
+    }
+    /**
+     * <code>required string title = 1;</code>
+     */
+    public com.google.protobuf.ByteString
+        getTitleBytes() {
+      java.lang.Object ref = title_;
+      if (ref instanceof java.lang.String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        title_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+
+    public static final int IDS_FIELD_NUMBER = 2;
+    private java.util.List<java.lang.Integer> ids_;
+    /**
+     * <code>repeated uint32 ids = 2;</code>
+     */
+    public java.util.List<java.lang.Integer>
+        getIdsList() {
+      return ids_;
+    }
+    /**
+     * <code>repeated uint32 ids = 2;</code>
+     */
+    public int getIdsCount() {
+      return ids_.size();
+    }
+    /**
+     * <code>repeated uint32 ids = 2;</code>
+     */
+    public int getIds(int index) {
+      return ids_.get(index);
+    }
+
+    private void initFields() {
+      title_ = "";
+      ids_ = java.util.Collections.emptyList();
+    }
+    private byte memoizedIsInitialized = -1;
+    public final boolean isInitialized() {
+      byte isInitialized = memoizedIsInitialized;
+      if (isInitialized == 1) return true;
+      if (isInitialized == 0) return false;
+
+      if (!hasTitle()) {
+        memoizedIsInitialized = 0;
+        return false;
+      }
+      memoizedIsInitialized = 1;
+      return true;
+    }
+
+    public void writeTo(com.google.protobuf.CodedOutputStream output)
+                        throws java.io.IOException {
+      getSerializedSize();
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        output.writeBytes(1, getTitleBytes());
+      }
+      for (int i = 0; i < ids_.size(); i++) {
+        output.writeUInt32(2, ids_.get(i));
+      }
+      getUnknownFields().writeTo(output);
+    }
+
+    private int memoizedSerializedSize = -1;
+    public int getSerializedSize() {
+      int size = memoizedSerializedSize;
+      if (size != -1) return size;
+
+      size = 0;
+      if (((bitField0_ & 0x00000001) == 0x00000001)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeBytesSize(1, getTitleBytes());
+      }
+      {
+        int dataSize = 0;
+        for (int i = 0; i < ids_.size(); i++) {
+          dataSize += com.google.protobuf.CodedOutputStream
+            .computeUInt32SizeNoTag(ids_.get(i));
+        }
+        size += dataSize;
+        size += 1 * getIdsList().size();
+      }
+      size += getUnknownFields().getSerializedSize();
+      memoizedSerializedSize = size;
+      return size;
+    }
+
+    private static final long serialVersionUID = 0L;
+    @java.lang.Override
+    protected java.lang.Object writeReplace()
+        throws java.io.ObjectStreamException {
+      return super.writeReplace();
+    }
+
+    public static hnproto.PBMessages.TopList parseFrom(
+        com.google.protobuf.ByteString data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static hnproto.PBMessages.TopList parseFrom(
+        com.google.protobuf.ByteString data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static hnproto.PBMessages.TopList parseFrom(byte[] data)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data);
+    }
+    public static hnproto.PBMessages.TopList parseFrom(
+        byte[] data,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws com.google.protobuf.InvalidProtocolBufferException {
+      return PARSER.parseFrom(data, extensionRegistry);
+    }
+    public static hnproto.PBMessages.TopList parseFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static hnproto.PBMessages.TopList parseFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+    public static hnproto.PBMessages.TopList parseDelimitedFrom(java.io.InputStream input)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input);
+    }
+    public static hnproto.PBMessages.TopList parseDelimitedFrom(
+        java.io.InputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseDelimitedFrom(input, extensionRegistry);
+    }
+    public static hnproto.PBMessages.TopList parseFrom(
+        com.google.protobuf.CodedInputStream input)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input);
+    }
+    public static hnproto.PBMessages.TopList parseFrom(
+        com.google.protobuf.CodedInputStream input,
+        com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+        throws java.io.IOException {
+      return PARSER.parseFrom(input, extensionRegistry);
+    }
+
+    public static Builder newBuilder() { return Builder.create(); }
+    public Builder newBuilderForType() { return newBuilder(); }
+    public static Builder newBuilder(hnproto.PBMessages.TopList prototype) {
+      return newBuilder().mergeFrom(prototype);
+    }
+    public Builder toBuilder() { return newBuilder(this); }
+
+    @java.lang.Override
+    protected Builder newBuilderForType(
+        com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+      Builder builder = new Builder(parent);
+      return builder;
+    }
+    /**
+     * Protobuf type {@code hnproto.TopList}
+     */
+    public static final class Builder extends
+        com.google.protobuf.GeneratedMessage.Builder<Builder> implements
+        // @@protoc_insertion_point(builder_implements:hnproto.TopList)
+        hnproto.PBMessages.TopListOrBuilder {
+      public static final com.google.protobuf.Descriptors.Descriptor
+          getDescriptor() {
+        return hnproto.PBMessages.internal_static_hnproto_TopList_descriptor;
+      }
+
+      protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
+          internalGetFieldAccessorTable() {
+        return hnproto.PBMessages.internal_static_hnproto_TopList_fieldAccessorTable
+            .ensureFieldAccessorsInitialized(
+                hnproto.PBMessages.TopList.class, hnproto.PBMessages.TopList.Builder.class);
+      }
+
+      // Construct using hnproto.PBMessages.TopList.newBuilder()
+      private Builder() {
+        maybeForceBuilderInitialization();
+      }
+
+      private Builder(
+          com.google.protobuf.GeneratedMessage.BuilderParent parent) {
+        super(parent);
+        maybeForceBuilderInitialization();
+      }
+      private void maybeForceBuilderInitialization() {
+        if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
+        }
+      }
+      private static Builder create() {
+        return new Builder();
+      }
+
+      public Builder clear() {
+        super.clear();
+        title_ = "";
+        bitField0_ = (bitField0_ & ~0x00000001);
+        ids_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        return this;
+      }
+
+      public Builder clone() {
+        return create().mergeFrom(buildPartial());
+      }
+
+      public com.google.protobuf.Descriptors.Descriptor
+          getDescriptorForType() {
+        return hnproto.PBMessages.internal_static_hnproto_TopList_descriptor;
+      }
+
+      public hnproto.PBMessages.TopList getDefaultInstanceForType() {
+        return hnproto.PBMessages.TopList.getDefaultInstance();
+      }
+
+      public hnproto.PBMessages.TopList build() {
+        hnproto.PBMessages.TopList result = buildPartial();
+        if (!result.isInitialized()) {
+          throw newUninitializedMessageException(result);
+        }
+        return result;
+      }
+
+      public hnproto.PBMessages.TopList buildPartial() {
+        hnproto.PBMessages.TopList result = new hnproto.PBMessages.TopList(this);
+        int from_bitField0_ = bitField0_;
+        int to_bitField0_ = 0;
+        if (((from_bitField0_ & 0x00000001) == 0x00000001)) {
+          to_bitField0_ |= 0x00000001;
+        }
+        result.title_ = title_;
+        if (((bitField0_ & 0x00000002) == 0x00000002)) {
+          ids_ = java.util.Collections.unmodifiableList(ids_);
+          bitField0_ = (bitField0_ & ~0x00000002);
+        }
+        result.ids_ = ids_;
+        result.bitField0_ = to_bitField0_;
+        onBuilt();
+        return result;
+      }
+
+      public Builder mergeFrom(com.google.protobuf.Message other) {
+        if (other instanceof hnproto.PBMessages.TopList) {
+          return mergeFrom((hnproto.PBMessages.TopList)other);
+        } else {
+          super.mergeFrom(other);
+          return this;
+        }
+      }
+
+      public Builder mergeFrom(hnproto.PBMessages.TopList other) {
+        if (other == hnproto.PBMessages.TopList.getDefaultInstance()) return this;
+        if (other.hasTitle()) {
+          bitField0_ |= 0x00000001;
+          title_ = other.title_;
+          onChanged();
+        }
+        if (!other.ids_.isEmpty()) {
+          if (ids_.isEmpty()) {
+            ids_ = other.ids_;
+            bitField0_ = (bitField0_ & ~0x00000002);
+          } else {
+            ensureIdsIsMutable();
+            ids_.addAll(other.ids_);
+          }
+          onChanged();
+        }
+        this.mergeUnknownFields(other.getUnknownFields());
+        return this;
+      }
+
+      public final boolean isInitialized() {
+        if (!hasTitle()) {
+          
+          return false;
+        }
+        return true;
+      }
+
+      public Builder mergeFrom(
+          com.google.protobuf.CodedInputStream input,
+          com.google.protobuf.ExtensionRegistryLite extensionRegistry)
+          throws java.io.IOException {
+        hnproto.PBMessages.TopList parsedMessage = null;
+        try {
+          parsedMessage = PARSER.parsePartialFrom(input, extensionRegistry);
+        } catch (com.google.protobuf.InvalidProtocolBufferException e) {
+          parsedMessage = (hnproto.PBMessages.TopList) e.getUnfinishedMessage();
+          throw e;
+        } finally {
+          if (parsedMessage != null) {
+            mergeFrom(parsedMessage);
+          }
+        }
+        return this;
+      }
+      private int bitField0_;
+
+      private java.lang.Object title_ = "";
+      /**
+       * <code>required string title = 1;</code>
+       */
+      public boolean hasTitle() {
+        return ((bitField0_ & 0x00000001) == 0x00000001);
+      }
+      /**
+       * <code>required string title = 1;</code>
+       */
+      public java.lang.String getTitle() {
+        java.lang.Object ref = title_;
+        if (!(ref instanceof java.lang.String)) {
+          com.google.protobuf.ByteString bs =
+              (com.google.protobuf.ByteString) ref;
+          java.lang.String s = bs.toStringUtf8();
+          if (bs.isValidUtf8()) {
+            title_ = s;
+          }
+          return s;
+        } else {
+          return (java.lang.String) ref;
+        }
+      }
+      /**
+       * <code>required string title = 1;</code>
+       */
+      public com.google.protobuf.ByteString
+          getTitleBytes() {
+        java.lang.Object ref = title_;
+        if (ref instanceof String) {
+          com.google.protobuf.ByteString b = 
+              com.google.protobuf.ByteString.copyFromUtf8(
+                  (java.lang.String) ref);
+          title_ = b;
+          return b;
+        } else {
+          return (com.google.protobuf.ByteString) ref;
+        }
+      }
+      /**
+       * <code>required string title = 1;</code>
+       */
+      public Builder setTitle(
+          java.lang.String value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        title_ = value;
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string title = 1;</code>
+       */
+      public Builder clearTitle() {
+        bitField0_ = (bitField0_ & ~0x00000001);
+        title_ = getDefaultInstance().getTitle();
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>required string title = 1;</code>
+       */
+      public Builder setTitleBytes(
+          com.google.protobuf.ByteString value) {
+        if (value == null) {
+    throw new NullPointerException();
+  }
+  bitField0_ |= 0x00000001;
+        title_ = value;
+        onChanged();
+        return this;
+      }
+
+      private java.util.List<java.lang.Integer> ids_ = java.util.Collections.emptyList();
+      private void ensureIdsIsMutable() {
+        if (!((bitField0_ & 0x00000002) == 0x00000002)) {
+          ids_ = new java.util.ArrayList<java.lang.Integer>(ids_);
+          bitField0_ |= 0x00000002;
+         }
+      }
+      /**
+       * <code>repeated uint32 ids = 2;</code>
+       */
+      public java.util.List<java.lang.Integer>
+          getIdsList() {
+        return java.util.Collections.unmodifiableList(ids_);
+      }
+      /**
+       * <code>repeated uint32 ids = 2;</code>
+       */
+      public int getIdsCount() {
+        return ids_.size();
+      }
+      /**
+       * <code>repeated uint32 ids = 2;</code>
+       */
+      public int getIds(int index) {
+        return ids_.get(index);
+      }
+      /**
+       * <code>repeated uint32 ids = 2;</code>
+       */
+      public Builder setIds(
+          int index, int value) {
+        ensureIdsIsMutable();
+        ids_.set(index, value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated uint32 ids = 2;</code>
+       */
+      public Builder addIds(int value) {
+        ensureIdsIsMutable();
+        ids_.add(value);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated uint32 ids = 2;</code>
+       */
+      public Builder addAllIds(
+          java.lang.Iterable<? extends java.lang.Integer> values) {
+        ensureIdsIsMutable();
+        com.google.protobuf.AbstractMessageLite.Builder.addAll(
+            values, ids_);
+        onChanged();
+        return this;
+      }
+      /**
+       * <code>repeated uint32 ids = 2;</code>
+       */
+      public Builder clearIds() {
+        ids_ = java.util.Collections.emptyList();
+        bitField0_ = (bitField0_ & ~0x00000002);
+        onChanged();
+        return this;
+      }
+
+      // @@protoc_insertion_point(builder_scope:hnproto.TopList)
+    }
+
+    static {
+      defaultInstance = new TopList(true);
+      defaultInstance.initFields();
+    }
+
+    // @@protoc_insertion_point(class_scope:hnproto.TopList)
+  }
+
   public interface UpdateOrBuilder extends
       // @@protoc_insertion_point(interface_extends:hnproto.Update)
       com.google.protobuf.MessageOrBuilder {
@@ -3028,6 +3667,19 @@ public final class PBMessages {
      * <code>optional .hnproto.User user = 3;</code>
      */
     hnproto.PBMessages.UserOrBuilder getUserOrBuilder();
+
+    /**
+     * <code>optional .hnproto.TopList top_list = 4;</code>
+     */
+    boolean hasTopList();
+    /**
+     * <code>optional .hnproto.TopList top_list = 4;</code>
+     */
+    hnproto.PBMessages.TopList getTopList();
+    /**
+     * <code>optional .hnproto.TopList top_list = 4;</code>
+     */
+    hnproto.PBMessages.TopListOrBuilder getTopListOrBuilder();
   }
   /**
    * Protobuf type {@code hnproto.Update}
@@ -3110,6 +3762,19 @@ public final class PBMessages {
                 user_ = subBuilder.buildPartial();
               }
               bitField0_ |= 0x00000004;
+              break;
+            }
+            case 34: {
+              hnproto.PBMessages.TopList.Builder subBuilder = null;
+              if (((bitField0_ & 0x00000008) == 0x00000008)) {
+                subBuilder = topList_.toBuilder();
+              }
+              topList_ = input.readMessage(hnproto.PBMessages.TopList.PARSER, extensionRegistry);
+              if (subBuilder != null) {
+                subBuilder.mergeFrom(topList_);
+                topList_ = subBuilder.buildPartial();
+              }
+              bitField0_ |= 0x00000008;
               break;
             }
           }
@@ -3209,10 +3874,32 @@ public final class PBMessages {
       return user_;
     }
 
+    public static final int TOP_LIST_FIELD_NUMBER = 4;
+    private hnproto.PBMessages.TopList topList_;
+    /**
+     * <code>optional .hnproto.TopList top_list = 4;</code>
+     */
+    public boolean hasTopList() {
+      return ((bitField0_ & 0x00000008) == 0x00000008);
+    }
+    /**
+     * <code>optional .hnproto.TopList top_list = 4;</code>
+     */
+    public hnproto.PBMessages.TopList getTopList() {
+      return topList_;
+    }
+    /**
+     * <code>optional .hnproto.TopList top_list = 4;</code>
+     */
+    public hnproto.PBMessages.TopListOrBuilder getTopListOrBuilder() {
+      return topList_;
+    }
+
     private void initFields() {
       time_ = 0;
       item_ = hnproto.PBMessages.Item.getDefaultInstance();
       user_ = hnproto.PBMessages.User.getDefaultInstance();
+      topList_ = hnproto.PBMessages.TopList.getDefaultInstance();
     }
     private byte memoizedIsInitialized = -1;
     public final boolean isInitialized() {
@@ -3220,6 +3907,12 @@ public final class PBMessages {
       if (isInitialized == 1) return true;
       if (isInitialized == 0) return false;
 
+      if (hasTopList()) {
+        if (!getTopList().isInitialized()) {
+          memoizedIsInitialized = 0;
+          return false;
+        }
+      }
       memoizedIsInitialized = 1;
       return true;
     }
@@ -3235,6 +3928,9 @@ public final class PBMessages {
       }
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         output.writeMessage(3, user_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        output.writeMessage(4, topList_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -3256,6 +3952,10 @@ public final class PBMessages {
       if (((bitField0_ & 0x00000004) == 0x00000004)) {
         size += com.google.protobuf.CodedOutputStream
           .computeMessageSize(3, user_);
+      }
+      if (((bitField0_ & 0x00000008) == 0x00000008)) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeMessageSize(4, topList_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSerializedSize = size;
@@ -3368,6 +4068,7 @@ public final class PBMessages {
         if (com.google.protobuf.GeneratedMessage.alwaysUseFieldBuilders) {
           getItemFieldBuilder();
           getUserFieldBuilder();
+          getTopListFieldBuilder();
         }
       }
       private static Builder create() {
@@ -3390,6 +4091,12 @@ public final class PBMessages {
           userBuilder_.clear();
         }
         bitField0_ = (bitField0_ & ~0x00000004);
+        if (topListBuilder_ == null) {
+          topList_ = hnproto.PBMessages.TopList.getDefaultInstance();
+        } else {
+          topListBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000008);
         return this;
       }
 
@@ -3438,6 +4145,14 @@ public final class PBMessages {
         } else {
           result.user_ = userBuilder_.build();
         }
+        if (((from_bitField0_ & 0x00000008) == 0x00000008)) {
+          to_bitField0_ |= 0x00000008;
+        }
+        if (topListBuilder_ == null) {
+          result.topList_ = topList_;
+        } else {
+          result.topList_ = topListBuilder_.build();
+        }
         result.bitField0_ = to_bitField0_;
         onBuilt();
         return result;
@@ -3463,11 +4178,20 @@ public final class PBMessages {
         if (other.hasUser()) {
           mergeUser(other.getUser());
         }
+        if (other.hasTopList()) {
+          mergeTopList(other.getTopList());
+        }
         this.mergeUnknownFields(other.getUnknownFields());
         return this;
       }
 
       public final boolean isInitialized() {
+        if (hasTopList()) {
+          if (!getTopList().isInitialized()) {
+            
+            return false;
+          }
+        }
         return true;
       }
 
@@ -3754,6 +4478,122 @@ public final class PBMessages {
         return userBuilder_;
       }
 
+      private hnproto.PBMessages.TopList topList_ = hnproto.PBMessages.TopList.getDefaultInstance();
+      private com.google.protobuf.SingleFieldBuilder<
+          hnproto.PBMessages.TopList, hnproto.PBMessages.TopList.Builder, hnproto.PBMessages.TopListOrBuilder> topListBuilder_;
+      /**
+       * <code>optional .hnproto.TopList top_list = 4;</code>
+       */
+      public boolean hasTopList() {
+        return ((bitField0_ & 0x00000008) == 0x00000008);
+      }
+      /**
+       * <code>optional .hnproto.TopList top_list = 4;</code>
+       */
+      public hnproto.PBMessages.TopList getTopList() {
+        if (topListBuilder_ == null) {
+          return topList_;
+        } else {
+          return topListBuilder_.getMessage();
+        }
+      }
+      /**
+       * <code>optional .hnproto.TopList top_list = 4;</code>
+       */
+      public Builder setTopList(hnproto.PBMessages.TopList value) {
+        if (topListBuilder_ == null) {
+          if (value == null) {
+            throw new NullPointerException();
+          }
+          topList_ = value;
+          onChanged();
+        } else {
+          topListBuilder_.setMessage(value);
+        }
+        bitField0_ |= 0x00000008;
+        return this;
+      }
+      /**
+       * <code>optional .hnproto.TopList top_list = 4;</code>
+       */
+      public Builder setTopList(
+          hnproto.PBMessages.TopList.Builder builderForValue) {
+        if (topListBuilder_ == null) {
+          topList_ = builderForValue.build();
+          onChanged();
+        } else {
+          topListBuilder_.setMessage(builderForValue.build());
+        }
+        bitField0_ |= 0x00000008;
+        return this;
+      }
+      /**
+       * <code>optional .hnproto.TopList top_list = 4;</code>
+       */
+      public Builder mergeTopList(hnproto.PBMessages.TopList value) {
+        if (topListBuilder_ == null) {
+          if (((bitField0_ & 0x00000008) == 0x00000008) &&
+              topList_ != hnproto.PBMessages.TopList.getDefaultInstance()) {
+            topList_ =
+              hnproto.PBMessages.TopList.newBuilder(topList_).mergeFrom(value).buildPartial();
+          } else {
+            topList_ = value;
+          }
+          onChanged();
+        } else {
+          topListBuilder_.mergeFrom(value);
+        }
+        bitField0_ |= 0x00000008;
+        return this;
+      }
+      /**
+       * <code>optional .hnproto.TopList top_list = 4;</code>
+       */
+      public Builder clearTopList() {
+        if (topListBuilder_ == null) {
+          topList_ = hnproto.PBMessages.TopList.getDefaultInstance();
+          onChanged();
+        } else {
+          topListBuilder_.clear();
+        }
+        bitField0_ = (bitField0_ & ~0x00000008);
+        return this;
+      }
+      /**
+       * <code>optional .hnproto.TopList top_list = 4;</code>
+       */
+      public hnproto.PBMessages.TopList.Builder getTopListBuilder() {
+        bitField0_ |= 0x00000008;
+        onChanged();
+        return getTopListFieldBuilder().getBuilder();
+      }
+      /**
+       * <code>optional .hnproto.TopList top_list = 4;</code>
+       */
+      public hnproto.PBMessages.TopListOrBuilder getTopListOrBuilder() {
+        if (topListBuilder_ != null) {
+          return topListBuilder_.getMessageOrBuilder();
+        } else {
+          return topList_;
+        }
+      }
+      /**
+       * <code>optional .hnproto.TopList top_list = 4;</code>
+       */
+      private com.google.protobuf.SingleFieldBuilder<
+          hnproto.PBMessages.TopList, hnproto.PBMessages.TopList.Builder, hnproto.PBMessages.TopListOrBuilder> 
+          getTopListFieldBuilder() {
+        if (topListBuilder_ == null) {
+          topListBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+              hnproto.PBMessages.TopList, hnproto.PBMessages.TopList.Builder, hnproto.PBMessages.TopListOrBuilder>(
+                  getTopList(),
+                  getParentForChildren(),
+                  isClean());
+          topList_ = null;
+        }
+        return topListBuilder_;
+      }
+
       // @@protoc_insertion_point(builder_scope:hnproto.Update)
     }
 
@@ -3776,6 +4616,11 @@ public final class PBMessages {
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
       internal_static_hnproto_User_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_hnproto_TopList_descriptor;
+  private static
+    com.google.protobuf.GeneratedMessage.FieldAccessorTable
+      internal_static_hnproto_TopList_fieldAccessorTable;
+  private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_hnproto_Update_descriptor;
   private static
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
@@ -3797,10 +4642,12 @@ public final class PBMessages {
       "e\030\014 \001(\t\022\r\n\005parts\030\r \003(\r\022\023\n\013descendents\030\016 " +
       "\001(\r\"c\n\004User\022\n\n\002id\030\001 \001(\t\022\r\n\005delay\030\002 \001(\r\022\017" +
       "\n\007created\030\003 \001(\r\022\r\n\005karma\030\004 \001(\r\022\r\n\005about\030" +
-      "\005 \001(\t\022\021\n\tsubmitted\030\006 \003(\r\"P\n\006Update\022\014\n\004ti" +
-      "me\030\001 \001(\r\022\033\n\004item\030\002 \001(\0132\r.hnproto.Item\022\033\n",
-      "\004user\030\003 \001(\0132\r.hnproto.UserB\025\n\007hnprotoB\nP" +
-      "BMessages"
+      "\005 \001(\t\022\021\n\tsubmitted\030\006 \003(\r\"%\n\007TopList\022\r\n\005t" +
+      "itle\030\001 \002(\t\022\013\n\003ids\030\002 \003(\r\"t\n\006Update\022\014\n\004tim",
+      "e\030\001 \001(\r\022\033\n\004item\030\002 \001(\0132\r.hnproto.Item\022\033\n\004" +
+      "user\030\003 \001(\0132\r.hnproto.User\022\"\n\010top_list\030\004 " +
+      "\001(\0132\020.hnproto.TopListB\025\n\007hnprotoB\nPBMess" +
+      "ages"
     };
     com.google.protobuf.Descriptors.FileDescriptor.InternalDescriptorAssigner assigner =
         new com.google.protobuf.Descriptors.FileDescriptor.    InternalDescriptorAssigner() {
@@ -3826,12 +4673,18 @@ public final class PBMessages {
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_hnproto_User_descriptor,
         new java.lang.String[] { "Id", "Delay", "Created", "Karma", "About", "Submitted", });
-    internal_static_hnproto_Update_descriptor =
+    internal_static_hnproto_TopList_descriptor =
       getDescriptor().getMessageTypes().get(2);
+    internal_static_hnproto_TopList_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessage.FieldAccessorTable(
+        internal_static_hnproto_TopList_descriptor,
+        new java.lang.String[] { "Title", "Ids", });
+    internal_static_hnproto_Update_descriptor =
+      getDescriptor().getMessageTypes().get(3);
     internal_static_hnproto_Update_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_hnproto_Update_descriptor,
-        new java.lang.String[] { "Time", "Item", "User", });
+        new java.lang.String[] { "Time", "Item", "User", "TopList", });
   }
 
   // @@protoc_insertion_point(outer_class_scope)

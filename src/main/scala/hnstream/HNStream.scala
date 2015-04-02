@@ -21,12 +21,11 @@ object HNStream extends App {
     fbItems.child(itemId.toString).addListenerForSingleValueEvent(new ValueEventListener {
       override def onDataChange(dataSnapshot: DataSnapshot) = {
         val item = Item.fromSnapshot(dataSnapshot)
-        val update = Update.createAtNow(item)
-        pushUpdate(update)
-        val serialized = update.toProtobufBytes
-        println("item " + itemId + ": " + item + " (" + serialized.length + " bytes pbuf)")
-        val deserialized = Update.fromProtobufBytes(serialized)
-        println("des item " + deserialized.item.id)
+        if (item == null) {
+          println("Could not fetch item " + itemId)
+        } else {
+          pushUpdate(Update.createAtNow(item))
+        }
       }
       override def onCancelled(firebaseError: FirebaseError) =
         println("error fetching item " + itemId + ": " + firebaseError)
@@ -38,12 +37,11 @@ object HNStream extends App {
     fbUsers.child(userId).addListenerForSingleValueEvent(new ValueEventListener {
       override def onDataChange(dataSnapshot: DataSnapshot) = {
         val user = User.fromSnapshot(dataSnapshot)
-        val update = Update.createAtNow(user)
-        val serialized = update.toProtobufBytes
-        println("user " + userId + ": " + user + " (" + serialized.length + " bytes pbuf)")
-        println("pre user " + user.id + " " + user.submitted.length)
-        val deserialized = Update.fromProtobufBytes(serialized)
-        println("des user " + deserialized.user.id + " " + deserialized.user.submitted.length)
+        if (user == null) {
+          println("Could not fetch user " + userId)
+        } else {
+          pushUpdate(Update.createAtNow(user))
+        }
       }
       override def onCancelled(firebaseError: FirebaseError) =
         println("error fetching user " + userId + ": " + firebaseError)
@@ -51,7 +49,7 @@ object HNStream extends App {
   }
 
   def notifyUserUpdate(userId: String) = {
-    println("user " + userId + " updated")
+//    println("user " + userId + " updated")
     fetchUser(userId)
   }
 
@@ -62,12 +60,26 @@ object HNStream extends App {
 
   def now() = (System.currentTimeMillis / 1000).toInt
 
-  def notifyMaxItemId(itemId: Int) = {
-    println(now + " max item id: " + itemId)
+//  var prevMaxId = 0
+  def notifyMaxItemId(newMaxId: Int) = {
+    println(now + " max item id: " + newMaxId)
+    // This is generally a wasted effort, as the items are not actually available to
+    // fetch until an update event is emitted for the new items. Or something like that.
+    // if (prevMaxId != 0) {
+    //   while (prevMaxId < newMaxId) {
+    //     prevMaxId = prevMaxId + 1
+    //     println("fetching new item " + prevMaxId)
+    //     fetchItem(prevMaxId)
+    //   }
+    // }
+    // prevMaxId = newMaxId
   }
 
-  def notifyUpdateTopList(listName: String, itemIds: JList[Int]) = {
-    println(now + " updated " + listName + " (" + itemIds.size + " items)")
+  def notifyUpdateTopList(listName: String, itemIds: List[Int]) = {
+    val toplist = new TopList(listName, itemIds)
+    val update = Update.createAtNow(toplist)
+    pushUpdate(update)
+    println(now + " updated " + listName + " (" + itemIds.size + " items), " + update.toProtobufBytes.length + " bytes")
   }
 
   val stringListTypeInd = new GenericTypeIndicator[JList[String]](){}
@@ -77,17 +89,14 @@ object HNStream extends App {
     val key = data.getKey
     key match {
       case "updates" =>
-        println(now + " updates")
         val itemUpdates = data.child("items").getValue(intListTypeInd)
         itemUpdates.asScala.foreach(notifyItemUpdate)
         val userUpdates = data.child("profiles").getValue(stringListTypeInd)
         userUpdates.asScala.foreach(notifyUserUpdate)
-//        println( + " " + data.child("items").getValue(intListTypeInd))
-//        data.child("profiles").getValue(stringListTypeInd).foreach(notifyUserUpdate)
       case "maxitem" =>
         notifyMaxItemId(data.getValue(intTypeInd))
       case _ =>
-        notifyUpdateTopList(key, data.getValue(intListTypeInd))
+        notifyUpdateTopList(key, data.getValue(intListTypeInd).asScala.toList)
     }
   }
 

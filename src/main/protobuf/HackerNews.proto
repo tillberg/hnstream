@@ -29,8 +29,14 @@ message User {
     repeated uint32 submitted = 6;
 }
 
+message TopList {
+    optional string title = 1;
+    repeated uint32 ids = 2;
+}
+
 message Update {
     optional uint32 time = 1;
     optional Item item = 2;
     optional User user = 3;
+    optional TopList top_list = 4;
 }
