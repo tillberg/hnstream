@@ -1,8 +1,10 @@
 package hnstream
 
 import java.util.concurrent.Semaphore
-import com.firebase.client._
 import java.util.{List => JList, Map => JMap}
+
+import com.firebase.client._
+
 import scala.collection.JavaConversions._
 
 object HNStream extends App {
@@ -16,14 +18,10 @@ object HNStream extends App {
     fbItems.child(itemId.toString).addListenerForSingleValueEvent(new ValueEventListener {
       override def onDataChange(dataSnapshot: DataSnapshot) = {
         val item = Item.fromSnapshot(dataSnapshot)
-//        val itemUpdate = ItemUpdate.fromItemNow(item)
-//        val serialized = item.toAvroMsg
-//        val item = new Item(0, false, "", "", 0, "", false, 0, List[Int](1), "", 0, "", List[Int](1), List[Int](1))
-//        val serialized = ScalaMessagePack.write(item)
-//        val serialized = ScalaMessagePack.write(new YourClass())
+//        val serialized = item.toProtobufMsg
 //        println("item " + itemId + ": " + item + " (" + serialized.length + " bytes avro)")
 //        println(serialized.map("%02X" format _).mkString)
-//        val deserialized = Item.fromAvroMsg(serialized)
+//        val deserialized = Item.fromProtobuf(serialized)
 //        println(deserialized.id)
       }
       override def onCancelled(firebaseError: FirebaseError) =

@@ -1,6 +1,6 @@
 package hnproto;
 
-option java_package = "hnproto";
+//option java_package = "hnproto";
 option java_outer_classname = "PBMessages";
 
 message Item {
@@ -18,7 +18,7 @@ message Item {
     optional string title = 12;
     repeated uint32 parts = 13;
     optional uint32 descendents = 14;
-}
+};
 
 //message User {
 //    optional uint32 id = 1;
