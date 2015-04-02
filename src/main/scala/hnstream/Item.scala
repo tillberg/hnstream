@@ -4,6 +4,7 @@ import java.io.ByteArrayOutputStream
 import java.util.{List => JList, Map => JMap}
 import com.firebase.client.{GenericTypeIndicator, DataSnapshot}
 import scala.collection.JavaConversions._
+import hnproto.PBMessages
 
 class Item(_id: Int,
            _deleted: Boolean,
@@ -18,7 +19,7 @@ class Item(_id: Int,
            _score: Int,
            _title: String,
            _parts: JList[Int],
-           _descendants: JList[Int]) {
+           _descendants: Int) {
   var id = _id
   var deleted = _deleted
   var _type = __type
@@ -34,25 +35,24 @@ class Item(_id: Int,
   var parts = _parts
   var descendants = _descendants
 
-  def toProtobufMsg(): Array[Byte] = {
-
-//    rec.put("id", this.id)
-//    rec.put("deleted", this.deleted)
-//    rec.put("_type", this._type)
-//    rec.put("by", this.by)
-//    rec.put("time", this.time)
-//    rec.put("text", this.text)
-//    rec.put("dead", this.dead)
-//    rec.put("parent", this.parent)
-//    rec.put("kids", this.kids)
-//    rec.put("url", this.url)
-//    rec.put("score", this.score)
-//    rec.put("title", this.title)
-//    rec.put("parts", this.parts)
-//    rec.put("descendants", this.descendants)
-    Array[Byte]()
-  }
-}
+  def toProtobufMsg: Array[Byte] = {
+    val builder = PBMessages.Item.newBuilder
+    builder.setId(this.id)
+    builder.setDeleted(this.deleted)
+    builder.setType(this._type)
+    builder.setBy(this.by)
+    builder.setTime(this.time)
+    builder.setText(this.text)
+    builder.setDead(this.dead)
+    builder.setParent(this.parent)
+    this.kids.foreach(builder.addKids)
+    builder.setUrl(this.url)
+    builder.setScore(this.score)
+    builder.setTitle(this.title)
+    this.parts.foreach(builder.addParts)
+    builder.setDescendents(this.descendants)
+    builder.build().toByteArray
+  }}
 
 object Item {
 
@@ -96,13 +96,28 @@ object Item {
     val score = getInt("score")
     val title = getString("title")
     val parts = getIntArray("parts")
-    val descendants = getIntArray("descendents")
+    val descendants = getInt("descendents")
     new Item(id, deleted, _type, by, time, text, dead, parent, kids, url, score, title, parts, descendants)
   }
 
-  def fromProtobuf(serialized: Array[Byte]) = {
-//    new Item(rec.id, rec.deleted, rec._type, rec.by, rec.time, rec.text, rec.dead, rec.parent, rec.kids, rec.url, rec.score, rec.title, rec.parts, rec.descendants)
-  }
+    def fromProtobuf(serialized: Array[Byte]): Item = {
+      val rec = PBMessages.Item.parseFrom(serialized)
+      new Item(
+        rec.getId,
+        rec.getDeleted,
+        rec.getType,
+        rec.getBy,
+        rec.getTime,
+        rec.getText,
+        rec.getDead,
+        rec.getParent,
+        rec.getKidsList.map(_.toInt),
+        rec.getUrl,
+        rec.getScore,
+        rec.getTitle,
+        rec.getPartsList.map(_.toInt),
+        rec.getDescendents)
+    }
 
   val objMapTypeInd = new GenericTypeIndicator[JMap[String, Object]](){}
   def fromSnapshot(dataSnapshot: DataSnapshot) = {
